@@ -22,8 +22,9 @@ const getBill = async (req, res = response) => {
   try {
     const { id } = req.params;
 
-    const bill = await Bill.find({ _id: id });
+    const bill = await Bill.findOne({ _id: id });
 
+    //TODO: revalidate
     if (!bill) {
       return res.status(400).json({
         success: false,
