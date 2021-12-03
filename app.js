@@ -17,7 +17,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use('/api/product', require('./routes/product'));
-app.use('/api/detail', require('./routes/deatil'));
+app.use('/api/detail', require('./routes/detail'));
 app.use('/api/bill', require('./routes/bill'));
 
 app.listen(process.env.PORT, () => {
