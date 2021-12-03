@@ -20,6 +20,6 @@ app.use('/api/product', require('./routes/product'));
 app.use('/api/detail', require('./routes/detail'));
 app.use('/api/bill', require('./routes/bill'));
 
-app.listen(process.env.PORT, () => {
+app.listen(process.env.PORT || 8080, () => {
   console.log(`The sever is running in port ${process.env.PORT}`);
 });
