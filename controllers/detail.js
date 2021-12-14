@@ -1,7 +1,6 @@
 const { request, response } = require('express');
 const Detail = require('../models/Detail');
 
-
 const getDetails = async (req = request, res = response) => {
   try {
     const details = await Detail.find();
