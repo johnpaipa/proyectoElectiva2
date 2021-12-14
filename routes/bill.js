@@ -6,6 +6,7 @@ const {
   createBill,
   updateBill
 } = require('../controllers/bill');
+const { check } = require('express-validator');
 
 const router = Router();
 
@@ -13,7 +14,12 @@ router.get('/', [], getBills);
 
 router.get('/:id', [], getBill);
 
-router.post('/', [], createBill);
+router.post('/', [
+  check('number', 'number is required').not().isEmpty(),
+  check('dateBill', 'dateBill is required').not().isEmpty(),
+  check('typePay', 'typePay is required').notEmpty(),
+  check('details', 'details is not valid').isMongoId(),
+], createBill);
 
 router.put('/:id', [], updateBill);
 
