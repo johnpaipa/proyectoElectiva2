@@ -1,26 +1,34 @@
 const { model, Schema } = require('mongoose');
 
 const ProductSchema = new Schema({
+  idProduct: {
+    type: String,
+    required: true
+  },
   description: {
     type: String,
-    require: true,
+    required: true,
   },
   value: {
     type: Number,
+    required: true,
   },
   stock: {
     type: Number,
+    required: true,
   },
   stockMin: {
     type: Number,
     default: 5
   },
   dateExpired: {
-    type: Date
+    type: String,
+    required: true,
   },
   typeProduct: {
     type: String,
-    enum: ['VIVERES', 'LICORES', 'MEDICINAS', 'ASEO']
+    enum: ['VIVERES', 'LICORES', 'MEDICINAS', 'ASEO'],
+    required: true,
   }
 });
 
