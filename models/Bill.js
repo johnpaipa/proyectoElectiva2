@@ -1,13 +1,17 @@
 const { model, Schema } = require('mongoose');
 
 const BillSchema = new Schema({
+  number:{
+    type:String,
+    required:true
+  },
   dateBill: {
     type: Date,
-    require: true,
+    required: true,
   },
   typePay: {
     type: Boolean,
-    require: true
+    required: true
   },
   details: {
     type: [Schema.Types.ObjectId]
