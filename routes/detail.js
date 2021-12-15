@@ -30,12 +30,12 @@ const router = Router();
  *          description: product object
  *      required:
  *        - id
- *        - cant 
+ *        - cant
  *      example:
  *         id: 6
- *         cant: 2 
- *         product: []  
- *       
+ *         cant: 2
+ *         product: []
+ *
  */
 
 
@@ -52,9 +52,9 @@ const router = Router();
  *          application/json:
  *            schema:
  *               type: array
- *               items:  
+ *               items:
  *                 $ref: '#/components/schemas/detail'
- *                  
+ *
  */
 router.get('/', [], getDetails);
 
@@ -77,12 +77,12 @@ router.get('/', [], getDetails);
  *        content:
  *          application/json:
  *            schema:
- *               type: object 
+ *               type: object
  *               $ref: '#/components/schemas/detail'
- * 
+ *
  *      404:
  *        description: detail not found
- *                  
+ *
  */
 router.get('/:id', [], getDetail);
 
@@ -130,9 +130,9 @@ router.post('/', [], createDetail);
  *                 $ref: '#/components/schemas/detail'
  *      404:
  *        description: detail not found
- *                  
+ *
  */
-router.put('/:id', [], updateDetail);
+router.put('/:idDetail', [], updateDetail);
 
 
 /**
@@ -154,12 +154,12 @@ router.put('/:id', [], updateDetail);
  *        content:
  *          application/json:
  *            schema:
- *               type: object 
+ *               type: object
  *               $ref: '#/components/schemas/detail'
- * 
+ *
  *      404:
  *        description: detail not found
- *                  
+ *
  */
 router.delete('/:id', [], deleteDetail);
 

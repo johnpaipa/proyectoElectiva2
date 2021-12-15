@@ -1,15 +1,16 @@
 const { model, Schema } = require('mongoose');
 
 const DetailSchema = new Schema({
-  id:{
-    type:String,
-    required:true
+  id: {
+    type: String,
+    required: true,
+    unique: true
   },
   cant: {
     type: Number,
     required: true,
   },
-  product:{
+  product: {
     type: Schema.Types.ObjectId,
     ref: 'Product'
   }

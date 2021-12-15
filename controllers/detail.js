@@ -1,5 +1,6 @@
 const { request, response } = require('express');
 const Detail = require('../models/Detail');
+const Product = require('../models/Product');
 
 const getDetails = async (req = request, res = response) => {
   try {
@@ -47,14 +48,22 @@ const getDetail = async (req = request, res = response) => {
 
 const createDetail = async (req = request, res = response) => {
   try {
-    const detail = new Detail(req.body);
-    console.log(req.body);
 
-    await detail.save();
+    const detail = await Detail.findOne({ id: req.body.id });
+    if (detail) {
+      return res.status(400).json({
+        success: false,
+        message: 'This Detail is Duplicate'
+      });
+    }
+
+    const newDetail = new Detail(req.body);
+
+    await newDetail.save();
 
     return res.status(200).json({
       success: true,
-      detail
+      newDetail
     });
 
   } catch (e) {
@@ -69,10 +78,10 @@ const createDetail = async (req = request, res = response) => {
 
 const updateDetail = async (req = request, res = response) => {
   try {
-    const { id } = req.params;
-    const { ...rest } = req.body;
+    const { idDetail } = req.params;
+    const { id,...rest } = req.body;
 
-    const detail = await Detail.findOneAndUpdate({ id: id }, rest,
+    const detail = await Detail.findOneAndUpdate({ id: idDetail }, rest,
       { new: true, useFindAndModify: false });
 
     if (!detail) {
@@ -99,9 +108,8 @@ const updateDetail = async (req = request, res = response) => {
 const deleteDetail = async (req = request, res = response) => {
   try {
     const { id } = req.params;
-    const obj = await Detail.findOne({ id: id });
 
-    const detail = await Detail.findByIdAndDelete(obj._id);
+    const detail = await Detail.findOneAndDelete({ id });
 
     if (!detail) {
       return res.status(404).json({
