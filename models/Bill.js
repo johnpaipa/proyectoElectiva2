@@ -1,9 +1,9 @@
 const { model, Schema } = require('mongoose');
 
 const BillSchema = new Schema({
-  number:{
-    type:String,
-    required:true
+  numberBill: {
+    type: String,
+    required: true,
   },
   dateBill: {
     type: Date,
@@ -14,7 +14,7 @@ const BillSchema = new Schema({
     required: true
   },
   details: {
-    type: [Schema.Types.ObjectId]
+    type: [String]
   }
 });
 

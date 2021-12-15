@@ -47,22 +47,13 @@ const getBill = async (req, res = response) => {
 
 const createBill = async (req, res = response) => {
   try {
-    const bill = await Bill.findOne({ number: req.body.number });
-
-    if (bill) {
-      return res.status(400).json({
-        success: false,
-        message: 'Bill duplicate'
-      });
-    }
-
     const newBill = new Bill(req.body);
 
     await newBill.save();
 
     return res.status(200).json({
       success: true,
-      bill
+      newBill
     });
 
   } catch (e) {

@@ -7,6 +7,7 @@ const {
   updateBill
 } = require('../controllers/bill');
 const { check } = require('express-validator');
+const { validateFields } = require('../middleware/validate-fields');
 
 const router = Router();
 
@@ -32,13 +33,13 @@ const router = Router();
  *      required:
  *        - number
  *        - dateBill
- *        - typePay 
+ *        - typePay
  *      example:
  *         number: 6
  *         dateBill: 2021-12-02T05:00:00.000Z
- *         typePay: false 
- *         details: []  
- *       
+ *         typePay: false
+ *         details: []
+ *
  */
 
 /**
@@ -54,9 +55,9 @@ const router = Router();
  *          application/json:
  *            schema:
  *               type: array
- *               items:  
+ *               items:
  *                 $ref: '#/components/schemas/bill'
- *                  
+ *
  */
 router.get('/', [], getBills);
 
@@ -80,12 +81,12 @@ router.get('/', [], getBills);
  *        content:
  *          application/json:
  *            schema:
- *               type: object 
+ *               type: object
  *               $ref: '#/components/schemas/bill'
- * 
+ *
  *      404:
  *        description: bill not found
- *                  
+ *
  */
 router.get('/:id', [], getBill);
 
@@ -108,10 +109,10 @@ router.get('/:id', [], getBill);
  *        description: new bill created!
  */
 router.post('/', [
-  check('number', 'number is required').not().isEmpty(),
-  check('dateBill', 'dateBill is required').not().isEmpty(),
-  check('typePay', 'typePay is required').notEmpty(),
-  check('details', 'details is not valid').isMongoId(),
+  check('numberBill', 'numberBill is required').not().isEmpty(),
+  check('dateBill', 'dateBill should be Boolean').not().isEmpty(),
+  check('typePay', 'typePay is required it should be Boolean').isBoolean(),
+  validateFields
 ], createBill);
 
 
@@ -140,7 +141,7 @@ router.post('/', [
  *                 $ref: '#/components/schemas/bill'
  *      404:
  *        description: bill not found
- *                  
+ *
  */
 router.put('/:id', [], updateBill);
 
@@ -164,12 +165,12 @@ router.put('/:id', [], updateBill);
  *        content:
  *          application/json:
  *            schema:
- *               type: object 
+ *               type: object
  *               $ref: '#/components/schemas/bill'
- * 
+ *
  *      404:
  *        description: bill not found
- *                  
+ *
  */
 router.delete('/:id', [], deleteBill);
 
