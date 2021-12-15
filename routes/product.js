@@ -37,24 +37,29 @@ const router = Router();
  *          description: default 5
  *        dateExpired:
  *          type: string
- *          description: product dateExpired 
+ *          description: product dateExpired
+ *        description:
+ *          type: string,
+ *          description: description
  *        typeProduct:
  *          type: string
  *          description: ['VIVERES', 'LICORES', 'MEDICINAS', 'ASEO']
  *      required:
  *        - idProduct
  *        - value
- *        - stock 
+ *        - stock
+ *        - description
  *        - dateExpired
  *        - typeProduct
  *      example:
  *         idProduct : 5
  *         value: 20000
+ *         description: product
  *         stock: 5
  *         stockMin: 5
  *         dateExpired: 2022/12/12
  *         typeProduct: VIVERES
- *       
+ *
  */
 
 /**
@@ -70,9 +75,9 @@ const router = Router();
  *          application/json:
  *            schema:
  *               type: array
- *               items:  
+ *               items:
  *                 $ref: '#/components/schemas/product'
- *                  
+ *
  */
 router.get('/', [], getProducts);
 
@@ -126,33 +131,14 @@ router.post('/new', [
  *        content:
  *          application/json:
  *            schema:
- *               type: object 
+ *               type: object
  *               $ref: '#/components/schemas/product'
- * 
+ *
  *      404:
  *        description: product not found
- *                  
+ *
  */
 router.get('/:id', [], getProduct);
-
-/**
- * @swagger
- * /api/product/new:
- *   post:
- *     summary: create a new product
- *     tags: [product]
- *     requestBody:
- *          required: true
- *          content:
- *            application/json:
- *              schema:
- *                 type: object
- *                 $ref: '#/components/schemas/product'
- *     responses:
- *      200:
- *        description: new product created!
- */
-router.post('/', [], createProduct);
 
 /**
  * @swagger
@@ -179,9 +165,19 @@ router.post('/', [], createProduct);
  *                 $ref: '#/components/schemas/product'
  *      404:
  *        description: product not found
- *                  
+ *
  */
-router.put('/:id', [], updateProduct);
+router.put('/:id', [
+  check('description', 'description is required').not().isEmpty(),
+  check('value', 'value is required').isNumeric(),
+  check('stock', 'stock is required').isNumeric(),
+  check('typeProduct', 'typeProduct is required').not().isEmpty(),
+  check('dateExpired', 'dateExpired is required').not().isEmpty(),
+  check('dateExpired').custom(date => validateDate(date)),
+  check('stock').custom(stock => validateNumber(stock)),
+  check('typeProduct').custom(typeProduct => validateProduct(typeProduct)),
+  validateFields
+], updateProduct);
 
 
 /**
@@ -203,12 +199,12 @@ router.put('/:id', [], updateProduct);
  *        content:
  *          application/json:
  *            schema:
- *               type: object 
+ *               type: object
  *               $ref: '#/components/schemas/product'
- * 
+ *
  *      404:
  *        description: product not found
- *                  
+ *
  */
 router.delete('/:id', [], deleteProduct);
 

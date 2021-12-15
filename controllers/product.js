@@ -1,12 +1,11 @@
 const { request, response } = require('express');
-const { isValidDate } = require('../middleware/validate-fields');
 const Product = require('../models/Product');
 
 const getProduct = async (req, res = response) => {
   try {
     const { id } = req.params;
 
-    const product = await Product.findOne({ _id: id });
+    const product = await Product.findOne({ idProduct: id });
 
     if (!product) {
       return res.status(400).json({
@@ -48,13 +47,31 @@ const getProducts = async (req = request, res = response) => {
 };
 
 const createProduct = async (req = request, res = response) => {
-  const newProduct = new Product(req.body);
-  newProduct.save();
-  res.status(200).json({
-    success: true,
-    message: 'Product created',
-    product: newProduct
-  });
+  try {
+    const product = await Product.findOne({ idProduct: req.body.idProduct });
+    if (product) {
+      return res.status(400).json({
+        success: false,
+        message: 'This Product is Duplicate'
+      });
+    }
+
+    const newProduct = new Product(req.body);
+    await newProduct.save();
+
+    res.status(200).json({
+      success: true,
+      message: 'Product created',
+      product: newProduct
+    });
+
+  } catch (e) {
+    console.log(e);
+    return res.status(500).json({
+      success: false,
+      message: 'Contact with admin'
+    });
+  }
 };
 
 // const isExpided = () => {
@@ -67,9 +84,9 @@ const createProduct = async (req = request, res = response) => {
 const updateProduct = async (req, res = response) => {
   try {
     const { id } = req.params;
-    const { bId, ...rest } = req.body;
+    const { idProduct, ...rest } = req.body;
 
-    const product = await Product.findOneAndUpdate({ _id: id }, rest,
+    const product = await Product.findOneAndUpdate({ idProduct: id }, rest,
       { new: true, useFindAndModify: false });
 
     if (!product) {
@@ -97,12 +114,12 @@ const deleteProduct = async (req, res = response) => {
   try {
     const { id } = req.params;
 
-    const product = await Product.findByIdAndDelete(id);
+    const product = await Product.findOneAndDelete({ idProduct: id });
 
     if (!product) {
       return res.status(400).json({
         success: false,
-        message: 'This Bill doesn\'t exist'
+        message: 'This Product doesn\'t exist'
       });
     }
 

@@ -3,10 +3,13 @@ const { request, response } = require('express');
 
 const products = ['VIVERES', 'LICORES', 'MEDICINAS', 'ASEO'];
 
-const validateFields = (req, res, next) => {
+const validateFields = (req = request, res = response, next) => {
   const err = validationResult(req);
   if (!err.isEmpty()) {
-    return res.status(400).json({ err });
+    return res.status(400).json({
+      success: false,
+      errors: err.mapped()
+    });
   }
   next();
 };

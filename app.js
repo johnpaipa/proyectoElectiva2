@@ -16,11 +16,7 @@ const swaggerSpec={
       title: "Node mongoDB API",
       version: "1.0.0"
     },
-    servers:[
-      {
-        url: "http:localhost:8080"
-      }
-    ]
+    
   },
   apis:[`${path.join(__dirname, "./routes/*.js")}`],
 }
@@ -43,10 +39,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/api/product', require('./routes/product'));
 app.use('/api/detail', require('./routes/detail'));
 app.use('/api/bill', require('./routes/bill'));
-app.use(
-  '/api-doc',
-   swaggerUI.serve, 
-   swaggerUI.setup(swaggerjsDoc(swaggerSpec)))
+app.use('/api-doc', swaggerUI.serve, swaggerUI.setup(swaggerjsDoc(swaggerSpec)))
 
 app.listen(process.env.PORT || 8080, () => {
   console.log(`The sever is running in port ${process.env.PORT}`);
