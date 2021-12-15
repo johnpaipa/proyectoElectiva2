@@ -27,6 +27,7 @@ DB_CNN = mongodb+srv://api-restful-product-user:Kyyn5rE6vNE38Tpo@cluster0.dktze.
 - `routes` es donde se enrutan los mapas y se pasan al controlador
 
 
+> Ruta Documentacion http://localhost:8080/api-doc/
 
 # api/product
 
