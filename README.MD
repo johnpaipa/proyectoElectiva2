@@ -67,6 +67,7 @@ Ejemplo:
     "idProduct": 5,
     "value": 20000,
     "stock": 5,
+    "description": "product description"
     "stockMin": 5,
     "dateExpired": "2022/12/12",
     "typeProduct": "VIVERES"
