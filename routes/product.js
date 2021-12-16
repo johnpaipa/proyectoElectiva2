@@ -4,7 +4,9 @@ const {
   createProduct,
   updateProduct,
   deleteProduct,
-  getProducts
+  getProducts,
+  isExpired,
+  calcIva
 } = require(
   '../controllers/product');
 const {
@@ -207,5 +209,8 @@ router.put('/:id', [
  *
  */
 router.delete('/:id', [], deleteProduct);
+
+router.get('/isExpired/:id', isExpired);
+router.get('/calIva/:id', calcIva);
 
 module.exports = router;

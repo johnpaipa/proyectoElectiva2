@@ -74,13 +74,6 @@ const createProduct = async (req = request, res = response) => {
   }
 };
 
-// const isExpided = () => {
-//     return
-// }
-
-// const calcIva = () => {
-
-// }
 const updateProduct = async (req, res = response) => {
   try {
     const { id } = req.params;
@@ -136,10 +129,64 @@ const deleteProduct = async (req, res = response) => {
   }
 };
 
+
+const isExpired = async (req, res) => {
+  try {
+      const { id } = req.params;
+      const product = await Product.findById({ _id: id });
+      const expired = product.dateExpired;    
+      const aux= new Date(expired);
+      const fechaActual= Date(Date.now());      
+      const aux2 = aux.getTime() - Date.now();   
+
+      if(aux2<=0){
+          
+          return res.status(200).json({
+              message: "El producto ha expirado", isExpired:true
+          });
+          
+      }else{
+          
+          return res.status(200).json({
+              message: "El producto no ha expirado", isExpired:false
+          });
+
+      }
+  } catch (error) {
+      return res.status(500).json({
+          message: "Error",
+          error: error.message
+      });
+  }    
+};
+
+const calcIva = async (req, res) => {
+  try {
+      const { id } = req.params;
+      const product = await Product.findById({ _id: id });
+
+      const iva = (product.value*0.19);      
+  
+
+      return res.status(200).json({
+          message: "El iva  es: "+ iva
+      });
+
+  } catch (error) {
+      return res.status(500).json({
+          message: "Error",
+          error: error.message
+      });
+  }    
+
+};
+
 module.exports = {
   getProducts,
   getProduct,
   createProduct,
   updateProduct,
-  deleteProduct
+  deleteProduct,
+  isExpired,
+  calcIva
 };
