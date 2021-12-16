@@ -5,7 +5,8 @@ const { getDetails,
     getDetail,
     updateDetail,
     createDetail,
-    deleteDetail,} = require('../controllers/detail');
+    deleteDetail,
+    calSubtotal,} = require('../controllers/detail');
 
 
 
@@ -162,5 +163,6 @@ router.put('/:idDetail', [], updateDetail);
  *
  */
 router.delete('/:id', [], deleteDetail);
+router.get('/calSubtotal/:id', calSubtotal);
 
 module.exports = router;

@@ -131,10 +131,36 @@ const deleteDetail = async (req = request, res = response) => {
   }
 };
 
+const calSubtotal = async (req, res) => {
+  try {
+      const { id } = req.params;
+      const detail = await Detail.findOne({ _id: id });
+   
+      const producto= await Product.findById({ _id: detail.product});
+
+      /*const iva = (producto.value*0.19); */ 
+   
+      const subtotal = (producto.value* detail.cant); 
+      console.log(subtotal)
+  
+      return res.status(200).json({
+          message: "El subtotal es: "+ subtotal
+      });
+
+  } catch (error) {
+      return res.status(500).json({
+          message: "Error detalle inexistente",
+          error: error.message
+      });
+  }    
+
+};
+
 module.exports = {
   getDetails,
   getDetail,
   updateDetail,
   createDetail,
   deleteDetail,
+  calSubtotal
 };
