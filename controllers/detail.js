@@ -134,7 +134,7 @@ const deleteDetail = async (req = request, res = response) => {
 const calSubtotal = async (req, res) => {
   try {
       const { id } = req.params;
-      const detail = await Detail.findOne({ _id: id });
+      const detail = await Detail.findOne({ id: id });
    
       const producto= await Product.findById({ _id: detail.product});
 

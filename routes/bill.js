@@ -4,7 +4,8 @@ const {
   getBills,
   deleteBill,
   createBill,
-  updateBill
+  updateBill,
+  calcTotal
 } = require('../controllers/bill');
 const { check } = require('express-validator');
 const { validateFields } = require('../middleware/validate-fields');
@@ -173,5 +174,6 @@ router.put('/:id', [], updateBill);
  *
  */
 router.delete('/:id', [], deleteBill);
+router.get('/calcTotal/:id', calcTotal);
 
 module.exports = router;

@@ -13,9 +13,10 @@ const BillSchema = new Schema({
     type: Boolean,
     required: true
   },
-  details: {
-    type: [String]
-  }
+  details: [{
+    type: [Schema.Types.ObjectId],
+    ref: 'detail'
+}]
 });
 
 BillSchema.method('toJSON', function () {
