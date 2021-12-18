@@ -1,4 +1,5 @@
 const { request, response } = require('express');
+const Client = require('../models/Client');
 
 const getClients = async (req = request, res = response) => {
   try {
