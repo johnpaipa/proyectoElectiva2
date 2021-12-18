@@ -112,7 +112,7 @@ const deleteClient = async (req = request, res = response) => {
     if (!detail) {
       return res.status(404).json({
         success: false,
-        message: 'This Detail doesn\'t exist'
+        message: 'This Client doesn\'t exist'
       });
     }
 
