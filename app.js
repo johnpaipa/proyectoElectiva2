@@ -16,7 +16,7 @@ const swaggerSpec={
       title: "Node mongoDB API",
       version: "1.0.0"
     },
-    
+
   },
   apis:[`${path.join(__dirname, "./routes/*.js")}`],
 }
@@ -36,9 +36,13 @@ app.use(express.static('public'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+///api/client/ ver todos los cliente y agregar nuevo
+// /api/client/:cedula actualizar y eliminar cliente
+
 app.use('/api/product', require('./routes/product'));
 app.use('/api/detail', require('./routes/detail'));
 app.use('/api/bill', require('./routes/bill'));
+app.use('/api/client', require('./routes/client'));
 app.use('/api-doc', swaggerUI.serve, swaggerUI.setup(swaggerjsDoc(swaggerSpec)))
 
 app.listen(process.env.PORT || 8080, () => {
