@@ -36,9 +36,6 @@ app.use(express.static('public'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-///api/client/ ver todos los cliente y agregar nuevo
-// /api/client/:cedula actualizar y eliminar cliente
-
 app.use('/api/product', require('./routes/product'));
 app.use('/api/detail', require('./routes/detail'));
 app.use('/api/bill', require('./routes/bill'));
