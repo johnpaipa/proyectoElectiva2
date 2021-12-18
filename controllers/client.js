@@ -1,11 +1,13 @@
 const { request, response } = require('express');
+const Product = require('../models/Product');
 
 const getClients = async (req = request, res = response) => {
   try {
-    const details = '';
+    const clients = await Client.find();
+
     return res.status(200).json({
       success: true,
-      details
+      clients
     });
   } catch (e) {
     console.log(e);
@@ -20,20 +22,18 @@ const getClient = async (req = request, res = response) => {
   try {
     const { id } = req.params;
 
-    const detail = 'await Detail.findOne({ id: id });';
+    const client = await Client.findOne({ idNumber: id });
 
-    //TODO: revalidate
-
-    if (!detail) {
+    if (!client) {
       return res.status(404).json({
         success: false,
-        message: 'This Detail doesn\'t exist'
+        message: 'This Client doesn\'t exist'
       });
     }
 
     return res.status(200).json({
       success: true,
-      detail
+      client
     });
   } catch (e) {
     console.log(e);
@@ -46,22 +46,21 @@ const getClient = async (req = request, res = response) => {
 
 const createClient = async (req = request, res = response) => {
   try {
-
-    const detail = 'await Detail.findOne({ id: req.body.id });';
-    if (detail) {
+    const client = await Client.findOne({ idNumber: req.body.id });
+    if (client) {
       return res.status(400).json({
         success: false,
-        message: 'This Detail is Duplicate'
+        message: 'This Client is Duplicate'
       });
     }
 
-    const newDetail = new Detail(req.body);
+    const newClient = new Client(req.body);
 
-    await newDetail.save();
+    await newClient.save();
 
     return res.status(200).json({
       success: true,
-      newDetail
+      newClient
     });
 
   } catch (e) {
@@ -76,21 +75,22 @@ const createClient = async (req = request, res = response) => {
 
 const updateClient = async (req = request, res = response) => {
   try {
-    const { idDetail } = req.params;
-    const { id, ...rest } = req.body;
+    const { idClient } = req.params;
+    const { idNumber, ...rest } = req.body;
 
-    const detail = 'await Detail.findOneAndUpdate({ id: idDetail }, rest,';
+    const client = await Client.findOneAndUpdate({ idNumber: idClient }, rest,
+      { new: true, useFindAndModify: false });
 
-    if (!detail) {
+    if (!client) {
       return res.status(404).json({
         success: false,
-        message: 'This Detail doesn\'t exist'
+        message: 'This Client doesn\'t exist'
       });
     }
 
     return res.status(200).json({
       success: true,
-      detail
+      client
     });
 
   } catch (e) {
@@ -106,7 +106,7 @@ const deleteClient = async (req = request, res = response) => {
   try {
     const { id } = req.params;
 
-    const detail = 'await Detail.findOneAndDelete({ id });';
+    const detail = await Client.findOneAndDelete({ idNumber: id });
 
     if (!detail) {
       return res.status(404).json({
