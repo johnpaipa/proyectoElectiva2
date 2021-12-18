@@ -68,9 +68,9 @@ const createBill = async (req, res = response) => {
 const updateBill = async (req, res = response) => {
   try {
     const { id } = req.params;
-    const { bId, ...rest } = req.body;
+    const { numberBill, ...rest } = req.body;
 
-    const bill = await Bill.findOneAndUpdate({ _id: id }, rest,
+    const bill = await Bill.findOneAndUpdate({ numberBill: id }, rest,
       { new: true, useFindAndModify: false });
 
     if (!bill) {
@@ -98,7 +98,7 @@ const deleteBill = async (req, res = response) => {
   try {
     const { id } = req.params;
 
-    const bill = await Bill.findByIdAndDelete(id);
+    const bill = await Bill.findOneAndDelete({ numberBill: id });
 
     if (!bill) {
       return res.status(400).json({
