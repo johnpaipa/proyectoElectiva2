@@ -22,7 +22,7 @@ const getBill = async (req, res = response) => {
   try {
     const { id } = req.params;
 
-    const bill = await Bill.findOne({ _id: id });
+    const bill = await Bill.findOne({ numberBill: id });
 
     //TODO: revalidate
     if (!bill) {
@@ -47,6 +47,16 @@ const getBill = async (req, res = response) => {
 
 const createBill = async (req, res = response) => {
   try {
+
+    const bill = await Bill.findOne({ numberBill: req.body.numberBill });
+
+    if (bill) {
+      return res.status(400).json({
+        success: false,
+        message: 'This Bill is duplicate'
+      });
+    }
+
     const newBill = new Bill(req.body);
 
     await newBill.save();

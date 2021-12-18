@@ -4,6 +4,7 @@ const BillSchema = new Schema({
   numberBill: {
     type: String,
     required: true,
+    unique: true
   },
   dateBill: {
     type: Date,
