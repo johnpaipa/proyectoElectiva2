@@ -145,7 +145,7 @@ router.post('/', [
  *        description: detail not found
  *
  */
-router.put('/:id', [], updateClient);
+router.put('/:idClient', [], updateClient);
 
 
 /**
