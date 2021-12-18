@@ -25,6 +25,9 @@ const ProductSchema = new Schema({
     type: String,
     required: true,
   },
+  supplier: {
+    type: String,
+  },
   typeProduct: {
     type: String,
     enum: ['VIVERES', 'LICORES', 'MEDICINAS', 'ASEO'],
