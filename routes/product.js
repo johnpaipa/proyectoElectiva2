@@ -99,7 +99,7 @@ router.get('/', [], getProducts);
  *      200:
  *        description: new product created!
  */
-router.post('/new', [
+router.post('/', [
   check('idProduct', 'idProduct is required').not().isEmpty(),
   check('description', 'description is required').not().isEmpty(),
   check('value', 'value is required').isNumeric(),
