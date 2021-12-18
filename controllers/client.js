@@ -46,7 +46,8 @@ const getClient = async (req = request, res = response) => {
 
 const createClient = async (req = request, res = response) => {
   try {
-    const client = await Client.findOne({ idNumber: req.body.id });
+    const client = await Client.findOne({ idNumber: req.body.idNumber });
+
     if (client) {
       return res.status(400).json({
         success: false,

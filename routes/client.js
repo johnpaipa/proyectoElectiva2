@@ -6,6 +6,10 @@ const { getClients,
   updateClient,
   createClient,
   deleteClient,} = require('../controllers/client');
+const { check } = require('express-validator');
+const {
+  validateDate, validateNumber, validateProduct, validateFields
+} = require('../middleware/validate-fields');
 
 
 
@@ -103,7 +107,16 @@ router.get('/:id', [], getClient);
  *      200:
  *        description: new detail created!
  */
-router.post('/', [], createClient);
+
+router.post('/', [
+  check('idNumber', 'idNumber is required').not().isEmpty(),
+  check('name', 'name is required').notEmpty(),
+  check('phone', 'phone is required').isNumeric(),
+  check('email', 'email is required').not().isEmpty(),
+  check('dateBirthday', 'dateBirthday is required').not().isEmpty(),
+  check('address', 'address is required').not().isEmpty(),
+  validateFields
+], createClient);
 
 /**
  * @swagger
