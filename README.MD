@@ -99,7 +99,7 @@ Ejemplo:
 ```
 
 ```diff
-+ POST /
++ POST /new
 Crea un nuevo producto en la base de datos
 No Parametros
 Request Body: Requerido
